@@ -51,10 +51,16 @@ const AuthForm = ({ type }: { type: FormType }) => {
     setErrorMessage("");
 
     try {
-      const user = type === "sign-up" ? await createAccount({ fullName: values.fullName || "", email: values.email,}): await signInUser({ email: values.email });
+      const user =
+        type === "sign-up"
+          ? await createAccount({
+              fullName: values.fullName || "",
+              email: values.email,
+            })
+          : await signInUser({ email: values.email });
 
       if (!user.accountId) {
-        setErrorMessage('No Account found with the provided email.');
+        setErrorMessage("No Account found with the provided email.");
       }
 
       setAccountId(user.accountId);

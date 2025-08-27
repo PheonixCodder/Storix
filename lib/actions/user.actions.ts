@@ -27,7 +27,6 @@ const handleError = (error: unknown, message: string) => {
 
 export const sendEmailOTP = async ({ email }: { email: string }) => {
   const { account } = await createAdminClient();
-
   try {
     const session = await account.createEmailToken(ID.unique(), email);
     
@@ -45,9 +44,11 @@ export const createAccount = async ({
   email: string;
 }) => {
   const existingUser = await getUserByEmail(email);
+  console.log(existingUser)
 
   const accountId = await sendEmailOTP({ email });
   if (!accountId) throw new Error("Failed to send an OTP");
+  console.log(accountId)
 
   if (!existingUser) {
     const { databases } = await createAdminClient();
